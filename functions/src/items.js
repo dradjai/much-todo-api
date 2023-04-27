@@ -11,7 +11,8 @@ export async function addNewItem(req, res) {
 }
 
 export async function getAllItems(req, res) {
-  const itemsMessy = await coll.get()
+  const { userId } = req.params;
+  const itemsMessy = await coll.where("userId", "==", userId).get()
   const itemsClean = itemsMessy.docs.map(doc => ({ ...doc.data(), id: doc.id }))
   res.send(itemsClean)
 }
